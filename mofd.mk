@@ -302,3 +302,8 @@ PRODUCT_COPY_FILES += \
 # hardware optimizations
 #PRODUCT_PROPERTY_OVERRIDES += \
 #    dalvik.vm.isa.x86.features=sse4_2,aes_in,popcnt,movbe
+
+#TESTING MUSIC APPS
+PRODUCT_PACKAGES += \
+AudioFX \
+Eleven
