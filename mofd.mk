@@ -273,6 +273,10 @@ $(call inherit-product-if-exists, vendor/asus/mofd-common/mofd-common-vendor.mk)
 PRODUCT_PACKAGES += \
     libstlport
 
+#TWRP
+PRODUCT_COPY_FILES += \
+    device/asus/mofd-common/recovery/twrp.fstab:recovery/root/etc/twrp.fstab
+
 # Add WiFi Firmware
 $(call inherit-product-if-exists, hardware/broadcom/wlan/bcmdhd/firmware/bcm4339/device-bcm.mk)
 
