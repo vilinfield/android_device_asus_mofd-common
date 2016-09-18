@@ -61,8 +61,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     charger \
     charger_res_images
-    
- ADDITIONAL_DEFAULT_PROPERTIES += ro.sys.powerctl.no.shutdown=1
 
 # Dalvik
 PRODUCT_PROPERTY_OVERRIDES += \
