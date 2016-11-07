@@ -55,14 +55,15 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PACKAGES += \
     bspcapability \
     camera.mofd_v1 \
+    libshim_camera \
     Snap
 
 # Charger
 PRODUCT_PACKAGES += \
     charger \
     charger_res_images
-    
- ADDITIONAL_DEFAULT_PROPERTIES += ro.sys.powerctl.no.shutdown=1
+
+ADDITIONAL_DEFAULT_PROPERTIES += ro.sys.powerctl.no.shutdown=1
 
 # Dalvik
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -70,11 +71,15 @@ PRODUCT_PROPERTY_OVERRIDES += \
     dalvik.vm.implicit_checks=none
 
 # Display
-#PRODUCT_PACKAGES += \
-#    pvr_drv_video
+PRODUCT_PACKAGES += \
+    pvr_drv_video
 
 PRODUCT_COPY_FILES += \
     device/asus/mofd-common/powervr.ini:system/etc/powervr.ini
+
+# Factory reset protection
+ADDITIONAL_DEFAULT_PROPERTIES += \
+    ro.frp.pst=/dev/block/by-name/persistent
 
 # GPS
 PRODUCT_COPY_FILES += \
@@ -82,7 +87,12 @@ PRODUCT_COPY_FILES += \
     device/asus/mofd-common/configs/gps.xml:system/etc/gps.xml
 
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.spid.gps.tty=ttyMFD2
+    ro.spid.gps.tty=ttyMFD2 \
+    ro.spid.gps.FrqPlan=FRQ_PLAN_26MHZ_2PPM \
+    ro.spid.gps.RfType=GL_RF_47531_BRCM
+
+ADDITIONAL_DEFAULT_PROPERTIES += \
+    ro.gnss.sv.status=true
 
 # Houdini (arm native bridge)
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -127,50 +137,49 @@ PRODUCT_COPY_FILES += \
     frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:system/etc/media_codecs_google_video.xml
 
 # Media: SDK and OMX IL components
-#PRODUCT_PACKAGES += \
-#    msvdx_bin \
-#    topaz_bin
+PRODUCT_PACKAGES += \
+    msvdx_bin \
+    topaz_bin
 
 # Media: libva
-#PRODUCT_PACKAGES += \
-#    libva \
-#    libva-android \
-#    libva-tpi \
-#    vainfo
+PRODUCT_PACKAGES += \
+    libva \
+    libva-android \
+    libva-tpi \
+    vainfo
 
 # Media: libstagefrighthw
-#PRODUCT_PACKAGES += \
-#    libstagefrighthw
+PRODUCT_PACKAGES += \
+    libstagefrighthw
 
 # libmix
-#PRODUCT_PACKAGES += \
-#    libmixvbp_mpeg4 \
-#    libmixvbp_h264 \
-#    libmixvbp_h264secure \
-#    libmixvbp_vc1 \
-#    libmixvbp_vp8 \
-#    libmixvbp_mpeg2 \
-#    libva_videodecoder \
-#    libva_videoencoder
+PRODUCT_PACKAGES += \
+    libmixvbp_mpeg4 \
+    libmixvbp_h264 \
+    libmixvbp_h264secure \
+    libmixvbp_vc1 \
+    libmixvbp_vp8 \
+    libmixvbp_mpeg2 \
+    libva_videodecoder \
+    libva_videoencoder
 
-#PRODUCT_PACKAGES += \
-#    libwrs_omxil_common \
-#    libwrs_omxil_core_pvwrapped \
-#    libOMXVideoDecoderH263 \
-#    libOMXVideoDecoderMPEG4 \
-#    libOMXVideoDecoderWMV \
-#    libOMXVideoDecoderVP8 \
-#    libOMXVideoDecoderMPEG2 \
-#    libOMXVideoDecoderVP9HWR \
-#    libOMXVideoDecoderVP9Hybrid \
-#    libOMXVideoEncoderAVC \
-#    libOMXVideoEncoderH263 \
-#    libOMXVideoEncoderMPEG4 \
-#    libOMXVideoEncoderVP8
+PRODUCT_PACKAGES += \
+    libwrs_omxil_common \
+    libwrs_omxil_core_pvwrapped \
+    libOMXVideoDecoderH263 \
+    libOMXVideoDecoderMPEG4 \
+    libOMXVideoDecoderWMV \
+    libOMXVideoDecoderVP8 \
+    libOMXVideoDecoderMPEG2 \
+    libOMXVideoDecoderVP9HWR \
+    libOMXVideoEncoderAVC \
+    libOMXVideoEncoderH263 \
+    libOMXVideoEncoderMPEG4 \
+    libOMXVideoEncoderVP8
 
 # Media: libISV
-#PRODUCT_PACKAGES += \
-#    libisv_omx_core
+PRODUCT_PACKAGES += \
+    libisv_omx_core
 
 # PowerHAL
 PRODUCT_PACKAGES += \
@@ -185,7 +194,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Ramdisk
 PRODUCT_PACKAGES += \
-    brcm_config_init.sh \
     config_init.sh \
     fstab.mofd_v1 \
     init.avc.rc \
@@ -196,6 +204,7 @@ PRODUCT_PACKAGES += \
     init.config_init.rc \
     init.debug.rc \
     init.diag.rc \
+    init.firmware.rc \
     init.gps.rc \
     init.logtool.rc \
     init.modem.rc \
@@ -208,6 +217,8 @@ PRODUCT_PACKAGES += \
     init.wifi.rc \
     init.wifi.vendor.rc \
     init.zram.rc \
+    intel_prop \
+    intel_prop.cfg \
     thermald \
     ueventd.mofd_v1.rc
 
@@ -215,18 +226,23 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     device/asus/mofd-common/configs/sensor_hal_config_default.xml:system/etc/sensor_hal_config_default.xml
 
+# Shims
+PRODUCT_PACKAGES += \
+    libshim_icu \
+    libshim_gpsd
+
 # Thermal itux
 ENABLE_ITUXD := true
 PRODUCT_PACKAGES += \
     ituxd
 
 # IMG graphics
-#PRODUCT_PACKAGES += \
-#    hwcomposer.moorefield
+PRODUCT_PACKAGES += \
+    hwcomposer.moorefield
 
 # pvr
-#PRODUCT_PACKAGES += \
-#    libpvr2d
+PRODUCT_PACKAGES += \
+    libpvr2d
 
 # libdrm
 PRODUCT_PACKAGES += \
@@ -262,7 +278,6 @@ PRODUCT_PACKAGES += \
     libwpa_client \
     lib_driver_cmd_bcmdhd \
     hostapd \
-    dhcpcd.conf \
     wpa_supplicant \
     wpa_supplicant.conf
 
