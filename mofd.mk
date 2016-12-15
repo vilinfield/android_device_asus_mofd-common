@@ -69,8 +69,6 @@ PRODUCT_PACKAGES += \
     charger \
     charger_res_images
 
-ADDITIONAL_DEFAULT_PROPERTIES += ro.sys.powerctl.no.shutdown=1
-
 # Dalvik
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.dalvik.vm.isa.arm=x86 \
@@ -108,8 +106,8 @@ ADDITIONAL_DEFAULT_PROPERTIES += ro.dalvik.vm.native.bridge=libhoudini.so
 
 # Keyhandler
 PRODUCT_PACKAGES += \
-#    CMActions \
-#    com.cyanogenmod.keyhandler
+    CMActions \
+    com.cyanogenmod.keyhandler
 
 # Key layout files
 PRODUCT_COPY_FILES += \
